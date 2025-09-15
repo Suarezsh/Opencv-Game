@@ -1,4 +1,4 @@
-<img width="797" height="597" alt="image" src="https://github.com/user-attachments/assets/a4d798d3-96d6-41f1-a7a2-e88090da2dc5" />
+
 # Atrapa La Figura Divertida
 
 ¡Bienvenido a "Atrapa La Figura Divertida"! Este es un juego interactivo desarrollado con OpenCV, MediaPipe y Python, especialmente diseñado para la diversión de los niños. El objetivo es simple: atrapar las figuras que caen del cielo usando tu dedo índice.
@@ -55,3 +55,5 @@ Para empezar a jugar, sigue estos sencillos pasos:
 ## Desarrollado por
 
 *   **Suarez Sh**
+
+<img width="797" height="597" alt="image" src="https://github.com/user-attachments/assets/a4d798d3-96d6-41f1-a7a2-e88090da2dc5" />

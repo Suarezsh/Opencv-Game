@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import random
+import time
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -10,7 +11,7 @@ mp_face_mesh = mp.solutions.face_mesh
 class JuegoDeFiguras:
     def __init__(self):
         self.ventana = "Atrapa La Figura Divertida"
-        self.estado_juego = "menu"
+        self.estado_juego = "menu" # "menu", "jugando", "game_over"
         self.captura = cv2.VideoCapture(0)
         self.figuras_cayendo = []
         self.velocidad_figura = 5
@@ -22,6 +23,7 @@ class JuegoDeFiguras:
         self.color_fuente = (255, 255, 255)
         self.grosor_fuente = 2
         self.altura_item_menu = 40
+        self.tiempo_game_over_inicio = 0
 
         cv2.namedWindow(self.ventana)
         self.configurar_interacciones_menu()
@@ -32,19 +34,29 @@ class JuegoDeFiguras:
     def callback_raton(self, evento, x, y, banderas, param):
         if self.estado_juego == "menu":
             if evento == cv2.EVENT_MOUSEMOVE:
-                for i, opcion in enumerate(self.opciones_menu):
-                    y_inicio_texto = (self.captura.get(cv2.CAP_PROP_FRAME_HEIGHT) // 2) + (i * self.altura_item_menu) - (len(self.opciones_menu) * self.altura_item_menu // 2)
-                    y_fin_texto = y_inicio_texto + self.altura_item_menu
-                    if y_inicio_texto < y < y_fin_texto:
-                        self.opcion_seleccionada_indice = i
-                        break
-                else:
-                    self.opcion_seleccionada_indice = -1
+                self.actualizar_hover_menu(x, y)
             elif evento == cv2.EVENT_LBUTTONDOWN:
-                if self.opcion_seleccionada_indice == 0:
-                    self.iniciar_juego()
-                elif self.opcion_seleccionada_indice == 1:
-                    self.salir_programa()
+                self.seleccionar_opcion_menu()
+        elif self.estado_juego == "game_over":
+            if evento == cv2.EVENT_LBUTTONDOWN:
+                self.manejar_clic_boton_fin_juego(x, y)
+
+    def actualizar_hover_menu(self, x, y):
+        altura, ancho, _ = self.captura.read()[1].shape
+        centro_x, centro_y = ancho // 2, altura // 2
+        for i, opcion in enumerate(self.opciones_menu):
+            y_inicio_texto = centro_y + (i * self.altura_item_menu) - (len(self.opciones_menu) * self.altura_item_menu // 2)
+            y_fin_texto = y_inicio_texto + self.altura_item_menu
+            if y_inicio_texto < y < y_fin_texto:
+                self.opcion_seleccionada_indice = i
+                return
+        self.opcion_seleccionada_indice = -1
+
+    def seleccionar_opcion_menu(self):
+        if self.opcion_seleccionada_indice == 0:
+            self.iniciar_juego()
+        elif self.opcion_seleccionada_indice == 1:
+            self.salir_programa()
 
     def iniciar_juego(self):
         self.restablecer_estado_juego()
@@ -59,6 +71,7 @@ class JuegoDeFiguras:
 
     def estado_fin_del_juego(self):
         self.estado_juego = "game_over"
+        self.tiempo_game_over_inicio = time.time()
 
     def salir_programa(self):
         self.captura.release()
@@ -95,29 +108,23 @@ class JuegoDeFiguras:
         cv2.putText(frame, "Salir", (btn_salir_x + 70, btn_salir_y + 25), self.fuente, 0.7, (0, 0, 0), 2)
 
     def manejar_clic_boton_fin_juego(self, x, y):
-        if self.estado_juego == "game_over":
-            altura, ancho, _ = self.captura.read()[1].shape
-            centro_x, centro_y = ancho // 2, altura // 2
-            
-            btn_reiniciar_x = centro_x - 100
-            btn_reiniciar_y = centro_y + 80
-            btn_ancho = 200
-            btn_alto = 40
-            if btn_reiniciar_x < x < btn_reiniciar_x + btn_ancho and btn_reiniciar_y < y < btn_reiniciar_y + btn_alto:
-                self.iniciar_juego()
-                return
+        altura, ancho, _ = self.captura.read()[1].shape
+        centro_x, centro_y = ancho // 2, altura // 2
+        
+        btn_reiniciar_x = centro_x - 100
+        btn_reiniciar_y = centro_y + 80
+        btn_ancho = 200
+        btn_alto = 40
+        if btn_reiniciar_x < x < btn_reiniciar_x + btn_ancho and btn_reiniciar_y < y < btn_reiniciar_y + btn_alto:
+            self.iniciar_juego()
+            return
 
-            btn_salir_x = centro_x - 100
-            btn_salir_y = centro_y + 140
-            if btn_salir_x < x < btn_salir_x + btn_ancho and btn_salir_y < y < btn_salir_y + btn_alto:
-                self.salir_programa()
-                return
+        btn_salir_x = centro_x - 100
+        btn_salir_y = centro_y + 140
+        if btn_salir_x < x < btn_salir_x + btn_ancho and btn_salir_y < y < btn_salir_y + btn_alto:
+            self.salir_programa()
+            return
     
-    def callback_raton_fin_juego(self, evento, x, y, banderas, param):
-        if evento == cv2.EVENT_LBUTTONDOWN:
-            self.manejar_clic_boton_fin_juego(x, y)
-
-
     def ejecutar(self):
         with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) as manos, \
              mp_face_mesh.FaceMesh(static_image_mode=False, max_num_faces=1, min_detection_confidence=0.5, min_tracking_confidence=0.5) as detector_rostro:
@@ -184,17 +191,29 @@ class JuegoDeFiguras:
                                 connection_drawing_spec=mp_drawing.DrawingSpec(color=(0,255,0), thickness=1, circle_radius=1))
 
                 elif self.estado_juego == "game_over":
-                    self.dibujar_fin_del_juego(imagen_bgr)
-                    cv2.setMouseCallback(self.ventana, self.callback_raton_fin_juego)
+                    tiempo_actual = time.time()
+                    if tiempo_actual - self.tiempo_game_over_inicio > 3:
+                        self.estado_juego = "menu"
+                        self.opcion_seleccionada_indice = 0
+                    else:
+                        self.dibujar_fin_del_juego(imagen_bgr)
+                        # Este callback solo se activa cuando estamos en estado "game_over"
+                        cv2.setMouseCallback(self.ventana, self.callback_raton)
+
 
                 cv2.imshow(self.ventana, imagen_bgr)
 
+                tecla = cv2.waitKey(1) & 0xFF
+
                 if self.estado_juego == "menu":
-                    if cv2.waitKey(1) & 0xFF == 27:
+                    if tecla == 27: # ESC para salir del menu
                         self.salir_programa()
                 elif self.estado_juego == "jugando":
-                    if cv2.waitKey(1) & 0xFF == 27:
+                    if tecla == 27: # ESC para volver al menu desde jugando
                         self.estado_juego = "menu"
+                elif self.estado_juego == "game_over":
+                    if tecla == 27: # ESC para salir directamente de game_over
+                        self.salir_programa()
 
 
 if __name__ == "__main__":

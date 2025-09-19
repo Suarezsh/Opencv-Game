@@ -131,6 +131,7 @@ Hemos puesto especial cuidado en hacer este juego accesible para una amplia gama
 
 
 
+<img width="1042" height="890" alt="image" src="https://github.com/user-attachments/assets/43176da9-6131-4aa1-a553-ccf92c08422f" />
 
 <img width="1601" height="896" alt="image" src="https://github.com/user-attachments/assets/71bb2653-0059-418a-b82b-22e182da2538" />
 <img width="1047" height="897" alt="image" src="https://github.com/user-attachments/assets/d74077e5-7319-401d-acbe-70eaf3585386" />

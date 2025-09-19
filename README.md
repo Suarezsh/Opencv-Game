@@ -1,10 +1,10 @@
-# 🌟 Atrapa las Figuras Divertidas 🌟
+#  Atrapa las Figuras Divertidas 
 
 ¡Bienvenido a **Atrapa las Figuras Divertidas**! Un juego de destreza e interacción visual desarrollado con la potencia de **OpenCV** y **MediaPipe**. ¡Pon a prueba tu velocidad y precisión con un simple gesto de tu mano!
 
 ---
 
-## ✨ ¿Qué es este juego?
+##  ¿Qué es este juego?
 
 "Atrapa las Figuras Divertidas" transforma tu cámara web en un controlador de juego. Utilizando **OpenCV** para capturar y procesar el video en tiempo real, y **MediaPipe** para detectar con precisión tus manos y dedos, el juego te desafía a atrapar figuras que caen en la pantalla. ¡Tu dedo índice es tu única herramienta!
 
@@ -12,7 +12,7 @@ Este proyecto combina la tecnología de visión artificial con mecánicas de jue
 
 ---
 
-## 🚀 Características Principales
+##  Características Principales
 
 *   **Control de Gestos Revolucionario:** Olvídate del ratón y el teclado para jugar. Mueve tu mano y tu dedo índice será tu puntero. ¡La tecnología al servicio de la diversión!
 *   **Jugabilidad Adictiva:** ¡Atrapa tantas figuras como puedas! Observa cómo la velocidad y la dificultad aumentan, poniendo a prueba tus reflejos.
@@ -30,23 +30,23 @@ Este proyecto combina la tecnología de visión artificial con mecánicas de jue
 
 ---
 
-## 🏆 Adaptación y Accesibilidad
+##  Adaptación y Accesibilidad
 
 Hemos puesto especial cuidado en hacer este juego accesible para una amplia gama de usuarios, incluyendo aquellos con diversas necesidades:
 
-### 🤝 **Movilidad y Coordinación Motora**
+###  **Movilidad y Coordinación Motora**
 
 *   **Interacción Natural:** El control principal es el movimiento de la mano, que no requiere la motricidad fina del ratón o el teclado.
 *   **Área de Captura Amplia:** Las figuras y el punto de interacción del dedo índice son generosos, minimizando la frustración por la falta de precisión extrema.
 *   **Dificultad Progresiva y Adaptativa:** Los niveles aumentan gradualmente, permitiendo a cada jugador adaptarse a su propio ritmo.
 
-### 💡 **Dificultades Visuales**
+###  **Dificultades Visuales**
 
 *   **Alto Contraste:** Uso de colores vivos y contrastantes para figuras, puntos de interacción y texto, asegurando una excelente visibilidad.
 *   **Indicadores Claros:** El dedo detectado se resalta con un círculo brillante. Las figuras tienen formas distintivas.
 *   **Ventana Redimensionable:** Adapta el tamaño de la ventana de juego a tu preferencia.
 
-### 🧠 **Dificultades Cognitivas o de Atención**
+###  **Dificultades Cognitivas o de Atención**
 
 *   **Jugabilidad Sencilla:** El objetivo es claro y fácil de aprender: atrapar figuras.
 *   **Retroalimentación Inmediata:** Capturar una figura recompensa al instante con puntos y aumento de racha.
@@ -54,7 +54,7 @@ Hemos puesto especial cuidado en hacer este juego accesible para una amplia gama
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+##  Tecnologías Utilizadas
 
 *   **Python:** El lenguaje de programación central.
 *   **OpenCV (`cv2`):** Para el núcleo de la visión artificial, captura de video y dibujo en pantalla.
@@ -67,7 +67,7 @@ Hemos puesto especial cuidado en hacer este juego accesible para una amplia gama
 
 ---
 
-## 🚀 Cómo Empezar
+##  Cómo Empezar
 
 1.  **Clonar el Repositorio:**
     ```bash
@@ -84,11 +84,11 @@ Hemos puesto especial cuidado en hacer este juego accesible para una amplia gama
     ```bash
     python app.py
     ```
-    *(Si el archivo principal es `app.py`)*
+    
 
 ---
 
-## 🎮 Cómo Jugar
+##  Cómo Jugar
 
 1.  **Bienvenida e Ingreso de Nombre:** Al iniciar, se te pedirá tu nombre en la consola.
 2.  **Menú Principal:**
@@ -115,7 +115,7 @@ Hemos puesto especial cuidado en hacer este juego accesible para una amplia gama
 
 ---
 
-## 💡 Contribuciones y Mejoras Futuras
+##  Contribuciones y Mejoras Futuras
 
 ¡Tu creatividad es el límite! Aquí hay algunas ideas para llevar este juego al siguiente nivel:
 
